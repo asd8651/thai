@@ -8,18 +8,15 @@ def on_connect(mqttc, obj, flags, rc):
 def on_message(mqttc, obj, msg):
     print(msg.payload=="pv702\n")
     if(msg.payload!="pv702\n"):
-        try:
-            data = json.loads(msg.payload)
-            print data
-            params = {"pv_volt": data['pv_volt'], "pv_cur": data['pv_cur'], "pv_power": data['pv_power'],
-                      "Rediation": data['Rediation'], "pv_Temp": data['pv_Temp'], "amb_temp": data['amb_temp'],
-                      "Daily": data['Daily'], "total_L": data['total_L'], "total_H": data['total_H'],
-                      "date": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}
-            res = requests.post('http://60.249.6.104:8787/api/store/MMeZwZMbHIDa', params=params)
-            print res.text
-        except:
-            print "Unexpected error:", sys.exc_info()[0]
-            pass
+    #try:
+        data = json.loads(msg.payload)
+        print data
+        params = {"pv_volt": data['pv_volt'], "pv_cur": data['pv_cur'], "pv_power": data['pv_power'],"Rediation": data['Rediation'],"pv_Temp": data['pv_Temp'],"amb_temp": data['amb_temp'],"Daily": data['Daily'],"total_L": data['total_L'],"total_H": data['total_H'], "date":time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}
+        res = requests.post('http://60.249.6.104:8787/api/store/MMeZwZMbHIDa', params=params)
+        print res.text
+    #except:
+    #    print "Unexpected error:", sys.exc_info()[0]
+    #    pass
 def on_publish(mqttc, obj, mid):
     pass
 def on_subscribe(mqttc, obj, mid, granted_qos):
